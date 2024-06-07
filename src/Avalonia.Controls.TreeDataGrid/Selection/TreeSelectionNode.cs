@@ -151,6 +151,14 @@ namespace Avalonia.Controls.Selection
                     indexesChanged = shiftDelta != 0;
                     removed = removeChange.RemovedItems;
                     break;
+                case NotifyCollectionChangedAction.Move:
+                    var moveRemoveChange = OnItemsRemoved(e.OldStartingIndex, e.OldItems!);
+                    var moveAddChange = OnItemsAdded(e.NewStartingIndex, e.NewItems!);
+                    shiftIndex = moveRemoveChange.ShiftIndex;
+                    shiftDelta = moveRemoveChange.ShiftDelta + moveAddChange.ShiftDelta;
+                    indexesChanged = shiftDelta != 0;
+                    removed = moveRemoveChange.RemovedItems;
+                    break;
                 case NotifyCollectionChangedAction.Reset:
                     OnSourceReset();
                     break;
